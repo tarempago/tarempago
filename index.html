@@ -1,102 +1,55 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>TarempaGO</title>
-  <style>
-    body {
-      background: linear-gradient(to right, #e3f2fd, #ffffff);
-      font-family: 'Segoe UI', sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 2rem;
-      animation: fadeIn 1.2s ease-in-out;
-    }
-
-    @keyframes fadeIn {
-      from {opacity: 0; transform: translateY(20px);}
-      to {opacity: 1; transform: translateY(0);}
-    }
-
-    .logo {
-      font-size: 2.5rem;
-      font-weight: bold;
-      color: #001c5e;
-      margin-bottom: 0.5rem;
-      animation: slideDown 1s ease;
-    }
-
-    @keyframes slideDown {
-      0% {opacity: 0; transform: translateY(-30px);}
-      100% {opacity: 1; transform: translateY(0);}
-    }
-
-    .subtitle {
-      font-size: 1rem;
-      text-align: center;
-      background: #003366;
-      color: white;
-      padding: 1rem;
-      border-radius: 10px;
-      max-width: 400px;
-      animation: fadeIn 1.5s ease-in-out;
-    }
-
-    .btn {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background-color: #004d99;
-      color: white;
-      border: none;
-      padding: 1rem 1.5rem;
-      border-radius: 12px;
-      margin: 1rem;
-      font-weight: bold;
-      width: 300px;
-      text-decoration: none;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .btn:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
-      background-color: #0059b3;
-    }
-
-    .btn img {
-      width: 22px;
-      height: 22px;
-    }
-
-    .icon {
-      background: #d6fbf4;
-      padding: 1rem;
-      border-radius: 1rem;
-      margin-top: 2rem;
-      font-size: 1.2rem;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TarempaGO - Layanan Lokal Tarempa</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <img src="logo.png" alt="Logo TarempaGO" style="width: 160px; margin-bottom: 1rem;" />
-  <div class="subtitle">Antar-Jemput • Titip Belanja • Kirim Barang Lokal</div>
+    <header>
+        <img src="logo.svg" alt="TarempaGO Logo" class="logo">
+        <p>Layanan Lokal Terpercaya di Tarempa</p>
+    </header>
 
-  <a class="btn" href="https://wa.me/6288271127189?text=Halo%20TarempaGO%2C%20saya%20ingin%20antar-jemput">
-    Antar-Jemput <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WA">
-  </a>
-  <a class="btn" href="https://wa.me/6288271127189?text=Halo%20TarempaGO%2C%20saya%20ingin%20titip%20belanja">
-    Titip Belanja <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WA">
-  </a>
-  <a class="btn" href="https://wa.me/6288271127189?text=Halo%20TarempaGO%2C%20saya%20ingin%20kirim%20barang%20lokal">
-    Kirim Barang Lokal <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WA">
-  </a>
+    <main>
+        <div class="service-container">
+            <div class="service-card">
+                <a href="antar.html">
+                    <span class="service-icon">🚖</span>
+                    <span class="service-text">Antar Jemput</span>
+                    <p class="service-desc">Layanan antar jemput ke berbagai lokasi</p>
+                </a>
+            </div>
 
-  <div class="icon">
-  <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" width="24" height="24" style="vertical-align: middle; margin-right: 8px;" />
-  Layanan Aktif di Tarempa
-</div>
+            <div class="service-card">
+                <a href="belanja.html">
+                    <span class="service-icon">🛒</span>
+                    <span class="service-text">Titip Belanja</span>
+                    <p class="service-desc">Belanja kebutuhan sehari-hari</p>
+                </a>
+            </div>
+
+            <div class="service-card">
+                <a href="kirim.html">
+                    <span class="service-icon">📦</span>
+                    <span class="service-text">Kirim Barang</span>
+                    <p class="service-desc">Pengiriman barang antar lokasi</p>
+                </a>
+            </div>
+
+            <div class="service-card">
+                <a href="titip-nama.html">
+                    <span class="service-icon">🍱</span>
+                    <span class="service-text">Titip Makan</span>
+                    <p class="service-desc">Pesan makanan dari warung favorit</p>
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 TarempaGO - Melayani dengan Sepenuh Hati</p>
+    </footer>
 </body>
 </html>
