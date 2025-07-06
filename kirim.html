@@ -1,90 +1,172 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kirim Barang - TarempaGO</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Kirim Barang - TarempaGO</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <header>
-        <img src="logo.svg" alt="TarempaGO Logo" class="logo">
-        <h1>📦 Kirim Barang</h1>
-        <p>Pengiriman barang cepat dan aman antar lokasi</p>
-    </header>
+<body class="bg-gray-50 min-h-screen flex flex-col">
 
-    <main>
-        <div class="form-container">
-            <form id="kirimForm">
-                <div class="form-group">
-                    <label for="nama">Nama Pengirim:</label>
-                    <input type="text" id="nama" name="nama" placeholder="Masukkan nama lengkap Anda" required>
-                </div>
+  <header class="text-center py-6 bg-blue-600 text-white">
+    <img src="logo.svg" alt="TarempaGO Logo" class="mx-auto h-16 mb-2" />
+    <h1 class="text-2xl font-bold">📦 Kirim Barang</h1>
+    <p>Pengiriman barang cepat & aman antar lokasi</p>
+  </header>
 
-                <div class="form-group">
-                    <label for="alamat_penjemputan">Alamat Penjemputan Barang:</label>
-                    <input type="text" id="alamat_penjemputan" name="alamat_penjemputan" placeholder="Alamat lengkap penjemputan barang" required>
-                </div>
+  <main class="flex-1 max-w-xl mx-auto p-4">
 
-                <div class="form-group">
-                    <label for="alamat_tujuan">Alamat Tujuan Pengiriman:</label>
-                    <input type="text" id="alamat_tujuan" name="alamat_tujuan" placeholder="Alamat lengkap tujuan pengiriman" required>
-                </div>
+    <label for="namaUser" class="block font-semibold mb-1">Nama Pengirim:</label>
+    <input type="text" id="namaUser" placeholder="Nama lengkap Anda"
+      class="w-full border rounded px-3 py-2 mb-4" />
 
-                <div class="form-group">
-                    <label for="nama_penerima">Nama Penerima:</label>
-                    <input type="text" id="nama_penerima" name="nama_penerima" placeholder="Nama lengkap penerima barang" required>
-                </div>
+    <!-- Zona Penjemputan -->
+    <label class="block font-semibold mb-1">Zona Penjemputan Barang:</label>
+    <select id="lokasiJemput" onchange="toggleJalan('jemput')" class="w-full border rounded px-3 py-2 mb-2">
+      <option value="">-- Pilih Zona Jemput --</option>
+      <option value="Tarempa">Tarempa</option>
+      <option value="Tarempa Selatan">Tarempa Selatan</option>
+      <option value="Tarempa Barat">Tarempa Barat</option>
+      <option value="Tarempa Timur">Tarempa Timur</option>
+    </select>
 
-                <div class="form-group">
-                    <label for="hp_penerima">No. HP Penerima:</label>
-                    <input type="tel" id="hp_penerima" name="hp_penerima" placeholder="Nomor HP penerima" required>
-                </div>
+    <!-- Nama Jalan Penjemputan -->
+    <div id="jalanJemputWrapperTarempa" class="hidden mb-4">
+      <label class="block font-semibold mb-1">Nama Jalan Tarempa:</label>
+      <select id="jalanJemputTarempa" class="w-full border rounded px-3 py-2">
+        <option value="">-- Pilih Nama Jalan --</option>
+        <option>Jalan Kartini</option><option>Jalan Hang Tuah</option><option>Jalan Diponegoro</option>
+        <option>Jalan Raden Saleh</option><option>Pelabuan Tarempa</option><option>Pasar Sayur</option>
+        <option>Jalan Semen Panjang</option><option>Jalan Pasir Merah</option><option>Masjid Agung</option><option>Batu Lepe</option>
+      </select>
+    </div>
 
-                <div class="form-group">
-                    <label for="deskripsi_barang">Deskripsi Barang:</label>
-                    <textarea id="deskripsi_barang" name="deskripsi_barang" placeholder="Contoh:&#10;- Jenis barang: Dokumen&#10;- Ukuran: A4&#10;- Berat: 0.5kg&#10;- Nilai barang: Rp 50.000" rows="5" required></textarea>
-                </div>
+    <div id="jalanJemputWrapperSelatan" class="hidden mb-4">
+      <label class="block font-semibold mb-1">Nama Jalan Tarempa Selatan:</label>
+      <select id="jalanJemputSelatan" class="w-full border rounded px-3 py-2">
+        <option value="">-- Pilih Nama Jalan --</option>
+        <option>Batu Tambun</option><option>Gudang Tengah</option><option>Rintis</option>
+      </select>
+    </div>
 
-                <div class="form-group">
-                    <label for="waktu_kirim">Waktu Pengiriman Diinginkan:</label>
-                    <select id="waktu_kirim" name="waktu_kirim" required>
-                        <option value="">Pilih waktu pengiriman</option>
-                        <option value="Segera">Segera (dalam 1-2 jam)</option>
-                        <option value="Hari ini">Hari ini</option>
-                        <option value="Besok">Besok</option>
-                        <option value="Jadwal khusus">Jadwal khusus (tulis di catatan)</option>
-                    </select>
-                </div>
+    <div id="jalanJemputWrapperBarat" class="hidden mb-4">
+      <label class="block font-semibold mb-1">Nama Jalan Tarempa Barat:</label>
+      <select id="jalanJemputBarat" class="w-full border rounded px-3 py-2">
+        <option value="">-- Pilih Nama Jalan --</option>
+        <option>Sri Tanjung</option><option>Kampung Melayu</option><option>Rekam</option><option>Terap</option>
+      </select>
+    </div>
 
-                <div class="form-group">
-                    <label for="catatan">Catatan Tambahan:</label>
-                    <textarea id="catatan" name="catatan" placeholder="Instruksi khusus, jadwal tertentu, dll (opsional)" rows="3"></textarea>
-                </div>
+    <!-- Zona Tujuan -->
+    <label class="block font-semibold mb-1">Zona Tujuan Pengiriman:</label>
+    <select id="lokasiTujuan" onchange="toggleJalan('tujuan')" class="w-full border rounded px-3 py-2 mb-2">
+      <option value="">-- Pilih Zona Tujuan --</option>
+      <option value="Tarempa">Tarempa</option>
+      <option value="Tarempa Selatan">Tarempa Selatan</option>
+      <option value="Tarempa Barat">Tarempa Barat</option>
+      <option value="Tarempa Timur">Tarempa Timur</option>
+    </select>
 
-                <fieldset class="payment-method">
-                    <legend>Metode Pembayaran:</legend>
-                    <div class="radio-group">
-                        <label class="radio-label">
-                            <input type="radio" name="bayar" value="COD" required>
-                            <span>COD (Bayar di Tempat)</span>
-                        </label>
-                        <label class="radio-label">
-                            <input type="radio" name="bayar" value="Transfer" required>
-                            <span>Transfer Bank</span>
-                        </label>
-                    </div>
-                </fieldset>
+    <!-- Nama Jalan Tujuan -->
+    <div id="jalanTujuanWrapperTarempa" class="hidden mb-4">
+      <label class="block font-semibold mb-1">Nama Jalan Tarempa:</label>
+      <select id="jalanTujuanTarempa" class="w-full border rounded px-3 py-2">
+        <option value="">-- Pilih Nama Jalan --</option>
+        <option>Jalan Kartini</option><option>Jalan Hang Tuah</option><option>Jalan Diponegoro</option>
+        <option>Jalan Raden Saleh</option><option>Pelabuan Tarempa</option><option>Pasar Sayur</option>
+        <option>Jalan Semen Panjang</option><option>Jalan Pasir Merah</option><option>Masjid Agung</option><option>Batu Lepe</option>
+      </select>
+    </div>
 
-                <button type="submit" class="submit-btn">Kirim Pesan ke WhatsApp</button>
-            </form>
+    <div id="jalanTujuanWrapperSelatan" class="hidden mb-4">
+      <label class="block font-semibold mb-1">Nama Jalan Tarempa Selatan:</label>
+      <select id="jalanTujuanSelatan" class="w-full border rounded px-3 py-2">
+        <option value="">-- Pilih Nama Jalan --</option>
+        <option>Batu Tambun</option><option>Gudang Tengah</option><option>Rintis</option>
+      </select>
+    </div>
 
-            <div class="back-link">
-                <a href="index.html">← Kembali ke Menu Utama</a>
-            </div>
-        </div>
-    </main>
+    <div id="jalanTujuanWrapperBarat" class="hidden mb-4">
+      <label class="block font-semibold mb-1">Nama Jalan Tarempa Barat:</label>
+      <select id="jalanTujuanBarat" class="w-full border rounded px-3 py-2">
+        <option value="">-- Pilih Nama Jalan --</option>
+        <option>Sri Tanjung</option><option>Kampung Melayu</option><option>Rekam</option><option>Terap</option>
+      </select>
+    </div>
 
-    <script src="wa.js"></script>
+    <!-- Detail lainnya -->
+    <label class="block font-semibold mb-1">Nama Penerima:</label>
+    <input type="text" id="namaPenerima" class="w-full border rounded px-3 py-2 mb-4" placeholder="Nama lengkap penerima" />
+
+    <label class="block font-semibold mb-1">No. HP Penerima:</label>
+    <input type="tel" id="hpPenerima" class="w-full border rounded px-3 py-2 mb-4" placeholder="No. HP penerima" />
+
+    <label class="block font-semibold mb-1">Deskripsi Barang:</label>
+    <textarea id="deskripsiBarang" rows="3" placeholder="Contoh: Dokumen, Berat 1kg" class="w-full border rounded px-3 py-2 mb-4"></textarea>
+
+    <label class="block font-semibold mb-1">Catatan Tambahan:</label>
+    <textarea id="catatan" rows="2" placeholder="Instruksi tambahan (opsional)" class="w-full border rounded px-3 py-2 mb-4"></textarea>
+
+    <!-- Checkout -->
+    <button onclick="checkoutWA()" class="w-full bg-green-600 text-white py-3 rounded hover:bg-green-700">
+      Kirim Pesan ➤ WhatsApp
+    </button>
+
+    <div class="mt-4 text-center">
+      <a href="index.html" class="text-blue-600 hover:underline">← Kembali ke Menu Utama</a>
+    </div>
+  </main>
+
+  <script>
+    function toggleJalan(type) {
+      const zona = document.getElementById(`lokasi${capitalize(type)}`).value;
+
+      ['Tarempa','Selatan','Barat'].forEach(z => {
+        const wrap = document.getElementById(`jalan${capitalize(type)}Wrapper${z}`);
+        if(wrap) wrap.classList.add('hidden');
+      });
+
+      if (zona === "Tarempa") document.getElementById(`jalan${capitalize(type)}WrapperTarempa`).classList.remove('hidden');
+      if (zona === "Tarempa Selatan") document.getElementById(`jalan${capitalize(type)}WrapperSelatan`).classList.remove('hidden');
+      if (zona === "Tarempa Barat") document.getElementById(`jalan${capitalize(type)}WrapperBarat`).classList.remove('hidden');
+    }
+    function capitalize(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
+
+    function checkoutWA() {
+      const nama = document.getElementById('namaUser').value.trim();
+      const jemputZona = document.getElementById('lokasiJemput').value;
+      const tujuanZona = document.getElementById('lokasiTujuan').value;
+
+      const jemputJalanT = document.getElementById('jalanJemputTarempa').value;
+      const jemputJalanS = document.getElementById('jalanJemputSelatan').value;
+      const jemputJalanB = document.getElementById('jalanJemputBarat').value;
+
+      const tujuanJalanT = document.getElementById('jalanTujuanTarempa').value;
+      const tujuanJalanS = document.getElementById('jalanTujuanSelatan').value;
+      const tujuanJalanB = document.getElementById('jalanTujuanBarat').value;
+
+      const namaPenerima = document.getElementById('namaPenerima').value.trim();
+      const hpPenerima = document.getElementById('hpPenerima').value.trim();
+      const deskripsi = document.getElementById('deskripsiBarang').value.trim();
+      const catatan = document.getElementById('catatan').value.trim();
+
+      let jemput = jemputZona;
+      if (jemputZona === 'Tarempa' && jemputJalanT) jemput += ' - ' + jemputJalanT;
+      else if (jemputZona === 'Tarempa Selatan' && jemputJalanS) jemput += ' - ' + jemputJalanS;
+      else if (jemputZona === 'Tarempa Barat' && jemputJalanB) jemput += ' - ' + jemputJalanB;
+
+      let tujuan = tujuanZona;
+      if (tujuanZona === 'Tarempa' && tujuanJalanT) tujuan += ' - ' + tujuanJalanT;
+      else if (tujuanZona === 'Tarempa Selatan' && tujuanJalanS) tujuan += ' - ' + tujuanJalanS;
+      else if (tujuanZona === 'Tarempa Barat' && tujuanJalanB) tujuan += ' - ' + tujuanJalanB;
+
+      let message = `📦 *Kirim Barang*\n\n👤 *Nama Pengirim:* ${nama}\n📍 *Penjemputan:* ${jemput}\n🎯 *Tujuan:* ${tujuan}\n👥 *Penerima:* ${namaPenerima}\n📱 *HP Penerima:* ${hpPenerima}\n📦 *Deskripsi:* ${deskripsi}\n`;
+      if (catatan) message += `📝 *Catatan:* ${catatan}\n`;
+      message += `\n✨ Terima kasih sudah menggunakan TarempaGO!`;
+
+      const encoded = encodeURIComponent(message);
+      window.open(`https://wa.me/6288271127189?text=${encoded}`,'_blank');
+    }
+  </script>
 </body>
 </html>

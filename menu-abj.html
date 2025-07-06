@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Menu ABJ - TarempaGO</title>
+  <title>Menu Ayam Bakar Jembatan (ABJ) - TarempaGO</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-50 min-h-screen flex flex-col">
@@ -11,7 +11,7 @@
   <!-- HEADER -->
   <header class="text-center py-6 bg-blue-600 text-white">
     <img src="logo.svg" alt="TarempaGO Logo" class="mx-auto h-16 mb-2" />
-    <h1 class="text-2xl font-bold">🍗 Menu Pokok ABJ</h1>
+    <h1 class="text-2xl font-bold">🔥 Menu Ayam Bakar Jembatan (ABJ)</h1>
     <p>Halo, <span id="namaUserSpan"></span>! Silakan pilih menu favoritmu.</p>
   </header>
 
@@ -21,47 +21,40 @@
 
       <!-- Contoh Menu Card -->
       <div class="border rounded p-4 bg-white shadow flex flex-col justify-between">
-        <h3 class="font-bold mb-1">Ayam Bakar</h3>
-        <p class="text-sm text-gray-600 mb-2">Rp 25.000</p>
-        <button onclick="tambahKeKeranjang('Ayam Bakar')" class="bg-blue-600 text-white py-1 rounded hover:bg-blue-700">
+        <h3 class="font-bold mb-1">Ayam Bakar Original</h3>
+        <p class="text-sm text-gray-600 mb-2">Rp 30.000</p>
+        <button onclick="tambahKeKeranjang('Ayam Bakar Original', 30000)" class="bg-blue-600 text-white py-1 rounded hover:bg-blue-700">
           Tambah
         </button>
       </div>
 
       <div class="border rounded p-4 bg-white shadow flex flex-col justify-between">
-        <h3 class="font-bold mb-1">Nasi Goreng</h3>
-        <p class="text-sm text-gray-600 mb-2">Rp 15.000</p>
-        <button onclick="tambahKeKeranjang('Nasi Goreng')" class="bg-blue-600 text-white py-1 rounded hover:bg-blue-700">
+        <h3 class="font-bold mb-1">Ayam Bakar Pedas</h3>
+        <p class="text-sm text-gray-600 mb-2">Rp 32.000</p>
+        <button onclick="tambahKeKeranjang('Ayam Bakar Pedas', 32000)" class="bg-blue-600 text-white py-1 rounded hover:bg-blue-700">
           Tambah
         </button>
       </div>
 
       <div class="border rounded p-4 bg-white shadow flex flex-col justify-between">
-        <h3 class="font-bold mb-1">Teh Es</h3>
+        <h3 class="font-bold mb-1">Es Teh</h3>
         <p class="text-sm text-gray-600 mb-2">Rp 5.000</p>
-        <button onclick="tambahKeKeranjang('Teh Es')" class="bg-blue-600 text-white py-1 rounded hover:bg-blue-700">
-          Tambah
-        </button>
-      </div>
-
-      <div class="border rounded p-4 bg-white shadow flex flex-col justify-between">
-        <h3 class="font-bold mb-1">Kopi Panas</h3>
-        <p class="text-sm text-gray-600 mb-2">Rp 7.000</p>
-        <button onclick="tambahKeKeranjang('Kopi Panas')" class="bg-blue-600 text-white py-1 rounded hover:bg-blue-700">
+        <button onclick="tambahKeKeranjang('Es Teh', 5000)" class="bg-blue-600 text-white py-1 rounded hover:bg-blue-700">
           Tambah
         </button>
       </div>
 
     </div>
 
-    <!-- Keranjang -->
-    <h3 class="text-lg font-semibold mt-8 mb-2">🛒 Keranjang ABJ</h3>
+    <!-- KERANJANG -->
+    <h3 class="text-lg font-semibold mt-8 mb-2">🛒 Keranjang Pesanan</h3>
     <div class="overflow-x-auto mb-4">
       <table class="min-w-full border text-left text-sm">
         <thead class="bg-gray-200">
           <tr>
             <th class="px-4 py-2">Menu</th>
             <th class="px-4 py-2">Qty</th>
+            <th class="px-4 py-2">Harga</th>
             <th class="px-4 py-2">Aksi</th>
           </tr>
         </thead>
@@ -69,9 +62,22 @@
       </table>
     </div>
 
-    <!-- Tombol Checkout -->
-    <button onclick="checkoutKeranjang()"
-      class="mt-4 w-full bg-green-600 text-white py-3 rounded hover:bg-green-700">
+    <!-- DROPDOWN TUJUAN -->
+    <label for="tujuan" class="block font-semibold mb-1">Tujuan Pengantaran:</label>
+    <select id="tujuan" onchange="hitungTotal()" class="w-full border rounded px-3 py-2 mb-4">
+      <option value="0">-- Pilih Lokasi --</option>
+      <option value="20000">Antang - Rp 20.000</option>
+      <option value="15000">Batu Tambun - Rp 15.000</option>
+      <option value="10000">Tanjung Lambai - Rp 10.000</option>
+    </select>
+
+    <!-- TOTAL -->
+    <p class="font-semibold">Total Menu: <span id="totalMenuSpan">Rp 0</span></p>
+    <p class="font-semibold">Ongkos TarempaGO: <span id="ongkirSpan">Rp 0</span></p>
+    <p class="font-bold text-lg mt-1">Total Bayar: <span id="totalBayarSpan">Rp 0</span></p>
+
+    <!-- CHECKOUT -->
+    <button onclick="checkoutKeranjang()" class="mt-4 w-full bg-green-600 text-white py-3 rounded hover:bg-green-700">
       Checkout ➤ WhatsApp
     </button>
 
@@ -85,26 +91,27 @@
     const namaUser = localStorage.getItem('nama_user') || 'Pelanggan';
     document.getElementById('namaUserSpan').textContent = namaUser;
 
-    let keranjangKey = 'keranjang_abj'; // Kunci khusus ABJ
+    let keranjangKey = 'keranjang_abj'; // kunci khusus ABJ
     let keranjang = JSON.parse(localStorage.getItem(keranjangKey)) || [];
-
     const keranjangBody = document.getElementById('keranjangBody');
 
-    function tambahKeKeranjang(nama) {
+    function tambahKeKeranjang(nama, harga) {
       const index = keranjang.findIndex(item => item.nama === nama);
       if (index !== -1) {
         keranjang[index].qty += 1;
       } else {
-        keranjang.push({ nama: nama, qty: 1 });
+        keranjang.push({ nama: nama, qty: 1, harga: harga });
       }
       simpanKeranjang();
       renderKeranjang();
+      hitungTotal();
     }
 
     function hapusDariKeranjang(nama) {
       keranjang = keranjang.filter(item => item.nama !== nama);
       simpanKeranjang();
       renderKeranjang();
+      hitungTotal();
     }
 
     function simpanKeranjang() {
@@ -118,6 +125,7 @@
           <tr>
             <td class="border px-4 py-2">${item.nama}</td>
             <td class="border px-4 py-2">${item.qty}</td>
+            <td class="border px-4 py-2">Rp ${(item.harga * item.qty).toLocaleString()}</td>
             <td class="border px-4 py-2">
               <button class="text-red-600 hover:underline" onclick="hapusDariKeranjang('${item.nama}')">Hapus</button>
             </td>
@@ -126,30 +134,63 @@
       });
     }
 
+    function hitungTotalMenu() {
+      let total = 0;
+      keranjang.forEach(item => {
+        total += item.qty * item.harga;
+      });
+      return total;
+    }
+
+    function hitungTotal() {
+      const ongkir = parseInt(document.getElementById('tujuan').value) || 0;
+      const totalMenu = hitungTotalMenu();
+      const totalBayar = totalMenu + ongkir;
+
+      document.getElementById('totalMenuSpan').textContent = 'Rp ' + totalMenu.toLocaleString();
+      document.getElementById('ongkirSpan').textContent = 'Rp ' + ongkir.toLocaleString();
+      document.getElementById('totalBayarSpan').textContent = 'Rp ' + totalBayar.toLocaleString();
+    }
+
     function checkoutKeranjang() {
       if (keranjang.length === 0) {
         alert("Keranjang masih kosong!");
         return;
       }
 
-      let message = `🍗 *PESANAN ABJ Ayam Bakar Jembatan*\n\n`;
+      const tujuan = document.getElementById('tujuan');
+      const ongkir = parseInt(tujuan.value) || 0;
+      const lokasi = tujuan.options[tujuan.selectedIndex].text.split(' - ')[0];
+
+      if (lokasi === "-- Pilih Lokasi --") {
+        alert("Pilih lokasi pengantaran dulu!");
+        return;
+      }
+
+      const totalMenu = hitungTotalMenu();
+      const totalBayar = totalMenu + ongkir;
+
+      let message = `🔥 *PESANAN Ayam Bakar Jembatan (ABJ)*\n\n`;
       message += `👤 *Nama:* ${namaUser}\n`;
+      message += `📍 *Tujuan:* ${lokasi}\n`;
       message += `📝 *Pesanan:*\n`;
       keranjang.forEach(item => {
         message += `- ${item.nama} x${item.qty}\n`;
       });
+      message += `\n💰 *Total Menu:* Rp ${totalMenu.toLocaleString()}\n`;
+      message += `🚕 *Ongkos TarempaGO:* Rp ${ongkir.toLocaleString()}\n`;
+      message += `💵 *Total Bayar:* Rp ${totalBayar.toLocaleString()}\n`;
       message += `\n✨ Terima kasih sudah pesan via TarempaGO!`;
 
       const encodedMessage = encodeURIComponent(message);
       const waURL = `https://wa.me/6288271127189?text=${encodedMessage}`;
       window.open(waURL, '_blank');
 
-      // Bersihkan keranjang setelah checkout
       localStorage.removeItem(keranjangKey);
     }
 
-    // Render keranjang awal
     renderKeranjang();
+    hitungTotal();
   </script>
 
 </body>

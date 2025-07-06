@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Masukkan Nama - TarempaGO</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-blue-50 min-h-screen flex flex-col justify-center items-center">
+
+  <div class="bg-white p-6 rounded-lg shadow-md w-full max-w-sm text-center">
+    <img src="logo.svg" alt="Logo TarempaGO" class="w-20 mx-auto mb-4">
+    <h1 class="text-xl font-bold mb-2">Masukkan Nama Anda</h1>
+    <p class="text-sm text-gray-600 mb-4">Nama Anda akan digunakan untuk memproses pesanan</p>
+
+    <input type="text" id="namaUser" placeholder="Nama Lengkap"
+      class="w-full border rounded px-3 py-2 mb-4"/>
+
+    <button onclick="simpanNama()" class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">
+      Lanjut ➤
+    </button>
+  </div>
+
+  <script>
+    function simpanNama() {
+      const nama = document.getElementById('namaUser').value.trim();
+      if (!nama) {
+        alert('Silakan masukkan nama Anda!');
+        return;
+      }
+      localStorage.setItem('nama_user', nama);
+
+      const params = new URLSearchParams(window.location.search);
+      const next = params.get('next') || 'pilih-rumahmakan.html';
+      window.location.href = next;
+    }
+
+    // Prefill kalau sudah pernah disimpan
+    const savedNama = localStorage.getItem('nama_user');
+    if (savedNama) {
+      document.getElementById('namaUser').value = savedNama;
+    }
+  </script>
+
+</body>
+</html>
