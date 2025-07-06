@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Antar Jemput - TarempaGO</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <img src="logo.svg" alt="TarempaGO Logo" class="logo">
+        <h1>🚖 Antar Jemput</h1>
+        <p>Layanan antar jemput ke berbagai lokasi di Tarempa</p>
+    </header>
+
+    <main>
+        <div class="form-container">
+            <form id="antarForm">
+                <div class="form-group">
+                    <label for="nama">Nama Pelanggan:</label>
+                    <input type="text" id="nama" name="nama" placeholder="Masukkan nama lengkap Anda" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="alamat_jemput">Alamat Penjemputan:</label>
+                    <input type="text" id="alamat_jemput" name="alamat_jemput" placeholder="Masukkan alamat penjemputan" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="alamat_tujuan">Alamat Tujuan:</label>
+                    <input type="text" id="alamat_tujuan" name="alamat_tujuan" placeholder="Masukkan alamat tujuan" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="waktu">Waktu Penjemputan:</label>
+                    <input type="datetime-local" id="waktu" name="waktu" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="catatan">Catatan Tambahan:</label>
+                    <textarea id="catatan" name="catatan" placeholder="Catatan khusus (opsional)" rows="3"></textarea>
+                </div>
+
+                <fieldset class="payment-method">
+                    <legend>Metode Pembayaran:</legend>
+                    <div class="radio-group">
+                        <label class="radio-label">
+                            <input type="radio" name="bayar" value="COD" required>
+                            <span>COD (Bayar di Tempat)</span>
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="bayar" value="Transfer" required>
+                            <span>Transfer Bank</span>
+                        </label>
+                    </div>
+                </fieldset>
+
+                <button type="submit" class="submit-btn">Kirim Pesan ke WhatsApp</button>
+            </form>
+
+            <div class="back-link">
+                <a href="index.html">← Kembali ke Menu Utama</a>
+            </div>
+        </div>
+    </main>
+
+    <script src="wa.js"></script>
+</body>
+</html>

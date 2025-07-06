@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Menu Pondok Kayu - TarempaGO</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 min-h-screen flex flex-col">
+
+  <!-- HEADER -->
+  <header class="text-center py-6 bg-blue-600 text-white">
+    <img src="logo.svg" alt="TarempaGO Logo" class="mx-auto h-16 mb-2" />
+    <h1 class="text-2xl font-bold">🍗 Menu </h1>
+    <p>Halo, <span id="namaUserSpan"></span>! Silakan pilih menu favoritmu.</p>
+  </header>
+
+  <!-- MENU -->
+  <main class="flex-1 max-w-2xl mx-auto p-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+      <!-- Contoh Menu Card -->
+      <div class="border rounded p-4 bg-white shadow flex flex-col justify-between">
+        <h3 class="font-bold mb-1">Ayam Bakar</h3>
+        <p class="text-sm text-gray-600 mb-2">Rp 25.000</p>
+        <button onclick="tambahKeKeranjang('Ayam Bakar')" class="bg-blue-600 text-white py-1 rounded hover:bg-blue-700">
+          Tambah
+        </button>
+      </div>
+
+      <div class="border rounded p-4 bg-white shadow flex flex-col justify-between">
+        <h3 class="font-bold mb-1">Nasi Goreng</h3>
+        <p class="text-sm text-gray-600 mb-2">Rp 15.000</p>
+        <button onclick="tambahKeKeranjang('Nasi Goreng')" class="bg-blue-600 text-white py-1 rounded hover:bg-blue-700">
+          Tambah
+        </button>
+      </div>
+
+      <div class="border rounded p-4 bg-white shadow flex flex-col justify-between">
+        <h3 class="font-bold mb-1">Teh Es</h3>
+        <p class="text-sm text-gray-600 mb-2">Rp 5.000</p>
+        <button onclick="tambahKeKeranjang('Teh Es')" class="bg-blue-600 text-white py-1 rounded hover:bg-blue-700">
+          Tambah
+        </button>
+      </div>
+
+      <div class="border rounded p-4 bg-white shadow flex flex-col justify-between">
+        <h3 class="font-bold mb-1">Kopi Panas</h3>
+        <p class="text-sm text-gray-600 mb-2">Rp 7.000</p>
+        <button onclick="tambahKeKeranjang('Kopi Panas')" class="bg-blue-600 text-white py-1 rounded hover:bg-blue-700">
+          Tambah
+        </button>
+      </div>
+
+    </div>
+
+    <!-- Keranjang -->
+    <h3 class="text-lg font-semibold mt-8 mb-2">🛒 Keranjang Pesanan</h3>
+    <div class="overflow-x-auto mb-4">
+      <table class="min-w-full border text-left text-sm">
+        <thead class="bg-gray-200">
+          <tr>
+            <th class="px-4 py-2">Menu</th>
+            <th class="px-4 py-2">Qty</th>
+            <th class="px-4 py-2">Aksi</th>
+          </tr>
+        </thead>
+        <tbody id="keranjangBody" class="bg-white"></tbody>
+      </table>
+    </div>
+
+    <!-- Tombol Checkout -->
+    <button onclick="checkoutKeranjang()"
+      class="mt-4 w-full bg-green-600 text-white py-3 rounded hover:bg-green-700">
+      Checkout ➤ WhatsApp
+    </button>
+
+    <div class="mt-4 text-center">
+      <a href="pilih-rumahmakan.html" class="text-blue-600 hover:underline">← Kembali Pilih Rumah Makan</a>
+    </div>
+  </main>
+
+  <!-- SCRIPT -->
+  <script>
+    const namaUser = localStorage.getItem('nama_user') || 'Pelanggan';
+    document.getElementById('namaUserSpan').textContent = namaUser;
+
+    let keranjangKey = 'keranjang_abj'; // Kunci khusus ABJ
+    let keranjang = JSON.parse(localStorage.getItem(keranjangKey)) || [];
+
+    const keranjangBody = document.getElementById('keranjangBody');
+
+    function tambahKeKeranjang(nama) {
+      const index = keranjang.findIndex(item => item.nama === nama);
+      if (index !== -1) {
+        keranjang[index].qty += 1;
+      } else {
+        keranjang.push({ nama: nama, qty: 1 });
+      }
+      simpanKeranjang();
+      renderKeranjang();
+    }
+
+    function hapusDariKeranjang(nama) {
+      keranjang = keranjang.filter(item => item.nama !== nama);
+      simpanKeranjang();
+      renderKeranjang();
+    }
+
+    function simpanKeranjang() {
+      localStorage.setItem(keranjangKey, JSON.stringify(keranjang));
+    }
+
+    function renderKeranjang() {
+      keranjangBody.innerHTML = '';
+      keranjang.forEach(item => {
+        keranjangBody.innerHTML += `
+          <tr>
+            <td class="border px-4 py-2">${item.nama}</td>
+            <td class="border px-4 py-2">${item.qty}</td>
+            <td class="border px-4 py-2">
+              <button class="text-red-600 hover:underline" onclick="hapusDariKeranjang('${item.nama}')">Hapus</button>
+            </td>
+          </tr>
+        `;
+      });
+    }
+
+    function checkoutKeranjang() {
+      if (keranjang.length === 0) {
+        alert("Keranjang masih kosong!");
+        return;
+      }
+
+      let message = `🍗 *PESANAN ABJ Ayam Bakar Jembatan*\n\n`;
+      message += `👤 *Nama:* ${namaUser}\n`;
+      message += `📝 *Pesanan:*\n`;
+      keranjang.forEach(item => {
+        message += `- ${item.nama} x${item.qty}\n`;
+      });
+      message += `\n✨ Terima kasih sudah pesan via TarempaGO!`;
+
+      const encodedMessage = encodeURIComponent(message);
+      const waURL = `https://wa.me/6288271127189?text=${encodedMessage}`;
+      window.open(waURL, '_blank');
+
+      // Bersihkan keranjang setelah checkout
+      localStorage.removeItem(keranjangKey);
+    }
+
+    // Render keranjang awal
+    renderKeranjang();
+  </script>
+
+</body>
+</html>
